@@ -4,6 +4,8 @@ POC
 
 See this video for more details : https://www.youtube.com/watch?v=S-W0NX97DB0
 
+![screenshot](/doc/screenshot.png)
+
 ## Install
 
 Clone the project and run
