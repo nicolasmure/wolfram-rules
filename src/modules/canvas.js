@@ -12,7 +12,6 @@ const INITIAL_STATE = {
 export const BUILD = 'wolfram-rules/canvas/BUILD'
 export const BUILT = 'wolfram-rules/canvas/BUILT'
 export const DRAW = 'wolfram-rules/canvas/DRAW'
-export const FIRST_LINE_DRAWN = 'wolfram-rules/canvas/FIRST_LINE_DRAWN'
 export const LINE_DRAWN = 'wolfman-rules/canvas/LINE_DRAWN'
 
 export const build = (id, width, height) => ({
@@ -27,13 +26,8 @@ export const built = stage => ({
     stage,
 })
 
-export const draw = isFirstLine => ({
+export const draw = () => ({
     type: DRAW,
-    isFirstLine,
-})
-
-export const firstLineDrawn = () => ({
-    type: FIRST_LINE_DRAWN,
 })
 
 export const lineDrawn = () => ({
@@ -54,7 +48,6 @@ export default (state = INITIAL_STATE, action) => {
                 drawing: true,
             }
 
-        case FIRST_LINE_DRAWN:
         case LINE_DRAWN:
             return {
                 ...state,
