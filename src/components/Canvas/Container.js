@@ -5,21 +5,21 @@ import { build } from '../../modules/canvas'
 import Canvas from './Canvas'
 
 const mapStateToProps = state => ({
-    id: state.canvas.id,
+    projectionId: state.canvas.projectionId,
     width: state.canvas.width,
     height: state.canvas.height,
 })
 
 const mapDispatchToProps = dispatch => ({
-    buildCanvas: (id, width, height) => dispatch(build(id, width, height))
+    buildCanvas: (projectionId, width, height) => dispatch(build(projectionId, width, height))
 })
 
 const didMount = ({
     buildCanvas,
-    id,
+    projectionId,
     width,
     height,
-}) => buildCanvas(id, width, height)
+}) => buildCanvas(projectionId, width, height)
 
 export default connect(
     mapStateToProps,
