@@ -1,10 +1,10 @@
-const SIZE = 200
+const SIZE = 500
 
 const INITIAL_STATE = {
     projectionId: 'projection',
     width: SIZE,
     height: SIZE,
-    maxSize: SIZE,
+    maxSize: SIZE * 2,
     projectionCtx: null,
     paintingCtx: null,
     drawing: false,
@@ -32,8 +32,9 @@ export const draw = () => ({
     type: DRAW,
 })
 
-export const lineDrawn = () => ({
+export const lineDrawn = paintingCtx => ({
     type: LINE_DRAWN,
+    paintingCtx,
 })
 
 export default (state = INITIAL_STATE, action) => {
@@ -55,6 +56,7 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 drawing: false,
+                paintingCtx: action.paintingCtx,
             }
 
         default:
