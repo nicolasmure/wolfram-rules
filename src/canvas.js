@@ -125,7 +125,6 @@ const getTransfer = (ctx, x, y, width, height) => {
  */
 const getTransferFittingDrawing = (paintingCtx, size) => {
     const paintingWidth = paintingCtx.canvas.width
-    const paintingHeight = paintingCtx.canvas.height
 
     // create a transfer containing the whole drawing
     return getTransfer(
@@ -167,7 +166,6 @@ const projectPainting = (paintingCtx, projectionCtx, cellsCount) => {
  * @param int cellsCount
  */
 const scale = (paintingCtx, projectionCtx, cellsCount) => {
-    const paintingWidth = paintingCtx.canvas.width
     const projectionWidth = projectionCtx.canvas.width
     const projectionHeight = projectionCtx.canvas.height
 
