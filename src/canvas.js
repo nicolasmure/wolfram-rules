@@ -8,7 +8,9 @@ export const build = (id, width, height) => {
     const ctx = canvas.getContext('2d')
     ctx.fillStyle = 'white'
     ctx.fillRect(0, 0, width, height)
+
     ctx.fillStyle = 'black'
+    ctx.save()
 
     return ctx;
 }
@@ -34,38 +36,33 @@ export const drawLine = (cells, lineNumber, ctx) => {
         }
     }
 
-    // scale(stage, cells.length)
+    scale(ctx, cells.length)
 }
 
 const drawSegment = (ctx, x, y, length) => {
     ctx.fillRect(x - length, y, length, 1)
 }
 
-/*
-const scale = (stage, cellsCount) => {
-    const stageWidth = stage.getWidth()
+const scale = (ctx, cellsCount) => {
+    const canvasWidth = ctx.canvas.width
 
-    if (
-        stageWidth >= cellsCount
-        || !batchLimitReached(cellsCount)
-    ) {
+    if (canvasWidth >= cellsCount) {
         return;
     }
 
-    const ratio = cellsCount / stageWidth
+    const ratio = cellsCount / canvasWidth
     const scale = 1 / ratio
+    const canvasHeight = ctx.canvas.height
+    const offset = Math.floor((cellsCount - canvasWidth) / (ratio * 2))
+    console.log(canvasWidth, canvasHeight, scale, ratio, offset)
 
-    stage.scale({
-        x: scale,
-        y: scale,
-    })
+    const imageData = ctx.getImageData(0, 0, canvasWidth, canvasHeight)
+    const backup = document.createElement('canvas')
+    backup.getContext('2d').putImageData(imageData, 0, 0)
 
-    stage.position({
-        ...stage.position(),
-        x: Math.floor((cellsCount - stageWidth) / (ratio * 2)),
-    })
-
-    // Also redraw the previous layers which did not have this scale.
-    stage.batchDraw()
+    ctx.save() // save current matrix (default)
+    ctx.transform(scale, 0, 0, scale, offset, 0) // apply dezoom matrix at scale
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight) // clear previous content
+    ctx.drawImage(backup, 0, 0) // draw image at scale
+    ctx.restore() // restore default matrix
 }
-*/

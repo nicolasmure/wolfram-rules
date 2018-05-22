@@ -1,10 +1,10 @@
-const SIZE = 500
+const SIZE = 200
 
 const INITIAL_STATE = {
     id: 'canvas',
     width: SIZE,
     height: SIZE,
-    maxSize: SIZE,
+    maxSize: SIZE * 1.1,
     ctx: null,
     drawing: false,
 }
