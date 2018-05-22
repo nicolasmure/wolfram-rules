@@ -1,11 +1,12 @@
 const SIZE = 200
 
 const INITIAL_STATE = {
-    id: 'canvas',
+    projectionId: 'projection',
     width: SIZE,
     height: SIZE,
-    maxSize: SIZE * 1.1,
-    ctx: null,
+    maxSize: SIZE,
+    projectionCtx: null,
+    paintingCtx: null,
     drawing: false,
 }
 
@@ -14,16 +15,17 @@ export const BUILT = 'wolfram-rules/canvas/BUILT'
 export const DRAW = 'wolfram-rules/canvas/DRAW'
 export const LINE_DRAWN = 'wolfman-rules/canvas/LINE_DRAWN'
 
-export const build = (id, width, height) => ({
+export const build = (projectionId, width, height) => ({
     type: BUILD,
-    id,
+    projectionId,
     width,
     height,
 })
 
-export const built = ctx => ({
+export const built = ({ projectionCtx, paintingCtx }) => ({
     type: BUILT,
-    ctx,
+    projectionCtx,
+    paintingCtx,
 })
 
 export const draw = () => ({
@@ -39,7 +41,8 @@ export default (state = INITIAL_STATE, action) => {
         case BUILT:
             return {
                 ...state,
-                ctx: action.ctx,
+                projectionCtx: action.projectionCtx,
+                paintingCtx: action.paintingCtx,
             }
 
         case DRAW:

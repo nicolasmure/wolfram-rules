@@ -1,22 +1,29 @@
 import { BLACK } from './wolfram'
 
-export const build = (id, width, height) => {
-    const canvas = document.getElementById(id)
-    canvas.height = height
-    canvas.width = width
+export const build = (projectionId, width, height) => {
+    const projectionCanvas = document.getElementById(projectionId)
+    projectionCanvas.height = height
+    projectionCanvas.width = width
 
-    const ctx = canvas.getContext('2d')
-    ctx.fillStyle = 'white'
-    ctx.fillRect(0, 0, width, height)
+    const projectionCtx = projectionCanvas.getContext('2d')
 
-    ctx.fillStyle = 'black'
-    ctx.save()
+    const paintingCanvas = document.createElement('canvas')
+    const paintingCtx = paintingCanvas.getContext('2d')
+    paintingCtx.fillStyle = 'white'
+    paintingCtx.fillRect(0, 0, width, height)
 
-    return ctx;
+    paintingCtx.fillStyle = 'black'
+
+    applyProjection(paintingCtx, projectionCtx)
+
+    return {
+        projectionCtx,
+        paintingCtx,
+    };
 }
 
-export const drawLine = (cells, lineNumber, ctx) => {
-    const x = Math.floor(ctx.canvas.width / 2) - Math.floor(cells.length / 2)
+export const drawLine = (paintingCtx, projectionCtx, cells, lineNumber) => {
+    const x = Math.floor(projectionCtx.canvas.width / 2) - Math.floor(cells.length / 2)
     const y = lineNumber;
 
     for (let i = 0; i < cells.length;) {
@@ -32,17 +39,32 @@ export const drawLine = (cells, lineNumber, ctx) => {
         }
 
         if (segmentSize > 0) {
-            drawSegment(ctx, x + i, y, segmentSize)
+            drawSegment(paintingCtx, x + i, y, segmentSize)
         }
     }
 
-    scale(ctx, cells.length)
+    applyProjection(paintingCtx, projectionCtx)
+    // scale(ctx, cells.length)
 }
 
 const drawSegment = (ctx, x, y, length) => {
     ctx.fillRect(x - length, y, length, 1)
 }
 
+const applyProjection = (paintingCtx, projectionCtx) => {
+    const paintingHeight = paintingCtx.canvas.height
+    const paintingWidth = paintingCtx.canvas.width
+
+    console.log(paintingWidth, paintingHeight)
+
+    const imageData = paintingCtx.getImageData(0, 0, paintingWidth, paintingHeight)
+    const transfer = document.createElement('canvas')
+    transfer.getContext('2d').putImageData(imageData, 0, 0)
+
+    projectionCtx.drawImage(transfer, 0, 0)
+}
+
+/*
 const scale = (ctx, cellsCount) => {
     const canvasWidth = ctx.canvas.width
 
@@ -66,3 +88,4 @@ const scale = (ctx, cellsCount) => {
     ctx.drawImage(backup, 0, 0) // draw image at scale
     ctx.restore() // restore default matrix
 }
+*/
