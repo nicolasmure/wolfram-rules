@@ -1,6 +1,6 @@
 import { combineEpics, ofType } from 'redux-observable'
 import { filter, map } from 'rxjs/operators'
-import { BUILD, BUILT, DRAW, built, draw, lineDrawn } from '../modules/canvas'
+import { BUILD, DRAW, built, draw, lineDrawn } from '../modules/canvas'
 import { TICK } from '../modules/game'
 import { build, drawLine } from '../canvas'
 
@@ -25,7 +25,7 @@ const drawLineEpic = (action$, store) =>
         map(() => (drawLine(
             store.getState().game.cells,
             store.getState().game.lineNumber,
-            store.getState().canvas.stage,
+            store.getState().canvas.ctx,
         ))),
         map(lineDrawn),
     )

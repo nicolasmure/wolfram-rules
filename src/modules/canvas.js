@@ -4,8 +4,8 @@ const INITIAL_STATE = {
     id: 'canvas',
     width: SIZE,
     height: SIZE,
-    maxSize: SIZE * 4,
-    stage: null,
+    maxSize: SIZE,
+    ctx: null,
     drawing: false,
 }
 
@@ -21,9 +21,9 @@ export const build = (id, width, height) => ({
     height,
 })
 
-export const built = stage => ({
+export const built = ctx => ({
     type: BUILT,
-    stage,
+    ctx,
 })
 
 export const draw = () => ({
@@ -39,7 +39,7 @@ export default (state = INITIAL_STATE, action) => {
         case BUILT:
             return {
                 ...state,
-                stage: action.stage,
+                ctx: action.ctx,
             }
 
         case DRAW:
