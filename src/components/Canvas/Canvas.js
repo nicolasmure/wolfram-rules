@@ -1,6 +1,6 @@
 import React from 'react'
 
 export default ({
-    id,
+    projectionId,
 }) =>
-    <canvas id={ id }></canvas>
+    <canvas id={ projectionId }></canvas>

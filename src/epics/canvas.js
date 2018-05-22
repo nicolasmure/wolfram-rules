@@ -7,7 +7,7 @@ import { build, drawLine } from '../canvas'
 const buildCanvasEpic = action$ =>
     action$.pipe(
         ofType(BUILD),
-        map(({ id, width, height }) => build(id, width, height)),
+        map(({ projectionId, width, height }) => build(projectionId, width, height)),
         map(built),
     )
 
@@ -23,9 +23,10 @@ const drawLineEpic = (action$, store) =>
     action$.pipe(
         ofType(DRAW),
         map(() => (drawLine(
+            store.getState().canvas.paintingCtx,
+            store.getState().canvas.projectionCtx,
             store.getState().game.cells,
             store.getState().game.lineNumber,
-            store.getState().canvas.ctx,
         ))),
         map(lineDrawn),
     )
