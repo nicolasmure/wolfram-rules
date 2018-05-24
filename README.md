@@ -4,7 +4,7 @@ POC
 
 See this video for more details : https://www.youtube.com/watch?v=S-W0NX97DB0
 
-![screenshot](/doc/screenshot.png)
+![gif](/doc/wolfram-126.gif)
 
 ## Install
 
